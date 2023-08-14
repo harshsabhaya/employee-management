@@ -1,0 +1,23 @@
+GET http://localhost:3000/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BnbWFpbC5jb20iLCJpYXQiOjE2OTIwMDQ0NzgsImV4cCI6MTY5MjAwNDQ5MywiYXVkIjoiNjRkOWU5MTNiNzczYWQzNzMyNzg0NGMyIiwiaXNzIjoiYWJjLmNvbSJ9.5_fjIXYt4cjbcC16h4pMq0HXEYV9hUfwp1wN9Yi2kPk
+
+
+
+### Register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "email": "sss@gmail.com",
+    "password": "abc@12"
+}
+
+### Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "sss@gmail.com",
+    "password": "abc@12"
+}
