@@ -2,8 +2,6 @@ GET http://localhost:3000/
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BnbWFpbC5jb20iLCJpYXQiOjE2OTIwMDQ0NzgsImV4cCI6MTY5MjAwNDQ5MywiYXVkIjoiNjRkOWU5MTNiNzczYWQzNzMyNzg0NGMyIiwiaXNzIjoiYWJjLmNvbSJ9.5_fjIXYt4cjbcC16h4pMq0HXEYV9hUfwp1wN9Yi2kPk
 
-
-
 ### Register
 POST http://localhost:3000/auth/register
 Content-Type: application/json
@@ -18,7 +16,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "email": "sss@gmail.com",
+    "email": "harsh@gmail.com",
     "password": "abc@12"
 }
 
@@ -28,4 +26,74 @@ Content-Type: application/json
 
 {
     "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BnbWFpbC5jb20iLCJpZCI6IjY0ZDllOTEzYjc3M2FkMzczMjc4NDRjMiIsImlhdCI6MTY5MjAxNTc2NSwiZXhwIjoxNzIzNTczMzY1LCJhdWQiOiI2NGQ5ZTkxM2I3NzNhZDM3MzI3ODQ0YzIiLCJpc3MiOiJhYmMuY29tIn0.kN3nnHouZrXvbiywZbJH1-wFU-n_IS7D2x9OfbzEmOU"
+}
+
+### Logout
+DELETE http://localhost:3000/auth/logout
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc2NjcyLCJleHAiOjE3MjM3MzQyNzIsImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.I7WcXUpCKw2FW5jP4duEPoEWJWkqfoj0ROVwOgJKWKM"
+}
+
+### Add Company
+POST http://localhost:3000/company
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+
+{
+    "name": "WebOsmotic",
+    "email": "harsh.webosmotic@gmail.com",
+    "address": {
+        "line1": "A-6. someshwar nagar society",
+        "line2": "opp. Joggers Park Road",
+        "city": "Surat",
+        "state": "Gujarat",
+        "country": "India",
+        "zipCode": "395007"
+    },
+    "contact": "8460618624",
+    "status": "ACTIVE"
+}
+
+### Get Companies
+GET http://localhost:3000/company
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+
+### Get Company by ID
+GET http://localhost:3000/company/64dca8601ef93395a0b2ed3e
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+
+### Update Company
+PUT http://localhost:3000/company/64dca8601ef93395a0b2ed3e
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+
+{
+    "name": "WebOsmotic",
+    "email": "harsh.webosmotic@gmail.com",
+    "address": {
+        "line1": "A-6. someshwar nagar society",
+        "line2": "opp. Joggers Park Road",
+        "city": "Surat",
+        "state": "Gujarat",
+        "country": "India",
+        "zipCode": "395007"
+    },
+    "contact": "8460618624",
+    "status": "ACTIVE"
+}
+
+### Delete Company by ID
+DELETE http://localhost:3000/company/64dca8601ef93395a0b2ed3e
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+
+
+### Update Status by ID
+PATCH http://localhost:3000/company/64dc9f6c21946a4089b9745b
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+
+{
+    "status": "INACTIVE"
 }

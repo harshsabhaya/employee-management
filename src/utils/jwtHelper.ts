@@ -11,7 +11,7 @@ export const signAccessToken = (user: Record<string, any>) => {
     };
     const secret = process.env.ACCESS_TOKEN_SECRET;
     const option = {
-      expiresIn: '15s',
+      expiresIn: '1h',
       issuer: 'abc.com',
       audience: user.id,
     };
