@@ -21,3 +21,11 @@ Content-Type: application/json
     "email": "sss@gmail.com",
     "password": "abc@12"
 }
+
+### Refresh-token
+POST http://localhost:3000/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BnbWFpbC5jb20iLCJpZCI6IjY0ZDllOTEzYjc3M2FkMzczMjc4NDRjMiIsImlhdCI6MTY5MjAxNTc2NSwiZXhwIjoxNzIzNTczMzY1LCJhdWQiOiI2NGQ5ZTkxM2I3NzNhZDM3MzI3ODQ0YzIiLCJpc3MiOiJhYmMuY29tIn0.kN3nnHouZrXvbiywZbJH1-wFU-n_IS7D2x9OfbzEmOU"
+}

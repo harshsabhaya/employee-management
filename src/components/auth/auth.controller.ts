@@ -2,11 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import { asyncErrorHandler } from '../../utils/error';
 import createError from 'http-errors';
 import User from './auth.model';
+import client from './../../helper/redis';
 import {
   signAccessToken,
   signRefreshToken,
   verifyRefreshToken,
 } from '../../utils/jwtHelper';
+import sendMail from '../../utils/nodemailer';
 
 export const registerUserController = async (
   req: Request,
@@ -43,6 +45,16 @@ export const loginController = async (
 
   const accessToken = await signAccessToken(user);
   const refreshToken = await signRefreshToken(user);
+  const mail = 'harshsabhaya99@gmail.com';
+
+  const option = {
+    subject: 'Login Successfully',
+    text: `Thank you for login with ${mail}`,
+    html: `<h1>Thank you for login with ${mail}</h1>`,
+  };
+
+  sendMail(mail, option);
+
   res.send({ id: user.id, email: user.email, accessToken, refreshToken });
 };
 
@@ -57,4 +69,14 @@ export const refreshTokenController = async (
   const refreshToken = await signRefreshToken(user);
 
   res.send({ id: user.id, email: user.email, accessToken, refreshToken });
+};
+
+export const logoutController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user: any = await verifyRefreshToken(req.body.refreshToken);
+  await client.del(user.id);
+  res.sendStatus(204);
 };

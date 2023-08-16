@@ -5,6 +5,7 @@ import {
   registerUserController,
   loginController,
   refreshTokenController,
+  logoutController,
 } from './auth.controller';
 import { asyncErrorHandler } from '../../utils/error';
 
@@ -19,10 +20,7 @@ router.post(
 router.post(
   '/refresh-token',
   validate(RefreshToken),
-  asyncErrorHandler(refreshTokenController),
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.send('Refresh Token');
-  }
+  asyncErrorHandler(refreshTokenController)
 );
 
 router.post(
@@ -33,9 +31,8 @@ router.post(
 
 router.delete(
   '/logout',
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.send('LogOut');
-  }
+  validate(RefreshToken),
+  asyncErrorHandler(logoutController)
 );
 
 export default router;

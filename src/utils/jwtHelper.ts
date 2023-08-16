@@ -38,12 +38,20 @@ export const signRefreshToken = (user: Record<string, any>) => {
       issuer: 'abc.com',
     };
 
-    JWT.sign(payload, secret, option, (err: any, token: string) => {
+    JWT.sign(payload, secret, option, async (err: any, token: string) => {
       if (err) {
         console.log('JWT refresh token error >', err);
         reject(createError.InternalServerError());
       }
-      return resolve(token);
+
+      const result = await client.SET(user.id, token, {
+        EX: 365 * 24 * 60 * 60, // 1 year
+      });
+
+      if (result === 'OK') {
+        return resolve(token);
+      }
+      return reject(createError.InternalServerError());
     });
   });
 };
@@ -77,9 +85,15 @@ export const verifyRefreshToken = (refreshToken: string) => {
     JWT.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
-      (error: any, payload: any) => {
+      async (error: any, payload: any) => {
         if (error) return reject(createError.Unauthorized());
-        resolve(payload);
+        const { id } = payload;
+
+        const result = await client.GET(id);
+
+        if (refreshToken === result) return resolve(payload);
+
+        reject(createError.Unauthorized());
       }
     );
   });

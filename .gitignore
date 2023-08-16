@@ -3,5 +3,6 @@ node_modules
 *.rest
 *.log
 .env
+dump.rdb
 
 package-lock.json
