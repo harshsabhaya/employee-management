@@ -41,11 +41,12 @@ export const loginController = async (
   if (!user) throw createError.NotFound('User not registered');
 
   const isMatch = await user.isValidPassword(req.body.password);
-  if (!isMatch) throw createError.Unauthorized('Username/Password not valid');
+  if (!isMatch)
+    throw createError.Unauthorized('Username/Password does not valid');
 
   const accessToken = await signAccessToken(user);
   const refreshToken = await signRefreshToken(user);
-  const mail = 'harshsabhaya99@gmail.com';
+  const mail = process.env.CLIENT_EMAIL;
 
   const option = {
     subject: 'Login Successfully',

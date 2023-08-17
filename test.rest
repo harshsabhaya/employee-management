@@ -1,9 +1,13 @@
-GET http://localhost:3000/
+@token = bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYTcxMWY2ZDRjZWVhYTI5NWM2M2IiLCJpYXQiOjE2OTIyNTQ0MjAsImV4cCI6MTY5MjI1ODAyMCwiYXVkIjoiNjRkZGE3MTFmNmQ0Y2VlYWEyOTVjNjNiIiwiaXNzIjoiYWJjLmNvbSJ9.rQfPJ1KlPF_fF4Z3oshdrAFrgA3UTU4J2yJHXz3ecwo
+@url = http://localhost:3000/
+
+####
+GET {{url}}
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BnbWFpbC5jb20iLCJpYXQiOjE2OTIwMDQ0NzgsImV4cCI6MTY5MjAwNDQ5MywiYXVkIjoiNjRkOWU5MTNiNzczYWQzNzMyNzg0NGMyIiwiaXNzIjoiYWJjLmNvbSJ9.5_fjIXYt4cjbcC16h4pMq0HXEYV9hUfwp1wN9Yi2kPk
+Authorization: {{token}}
 
 ### Register
-POST http://localhost:3000/auth/register
+POST {{url}}auth/register
 Content-Type: application/json
 
 {
@@ -12,7 +16,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:3000/auth/login
+POST {{url}}auth/login
 Content-Type: application/json
 
 {
@@ -21,7 +25,7 @@ Content-Type: application/json
 }
 
 ### Refresh-token
-POST http://localhost:3000/auth/refresh-token
+POST {{url}}auth/refresh-token
 Content-Type: application/json
 
 {
@@ -29,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Logout
-DELETE http://localhost:3000/auth/logout
+DELETE {{url}}auth/logout
 Content-Type: application/json
 
 {
@@ -37,9 +41,9 @@ Content-Type: application/json
 }
 
 ### Add Company
-POST http://localhost:3000/company
+POST {{url}}company
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+Authorization: {{token}}
 
 {
     "name": "WebOsmotic",
@@ -57,17 +61,17 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQ
 }
 
 ### Get Companies
-GET http://localhost:3000/company
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+GET {{url}}company
+Authorization: {{token}}
 
 ### Get Company by ID
-GET http://localhost:3000/company/64dca8601ef93395a0b2ed3e
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+GET {{url}}company/64dca8601ef93395a0b2ed3e
+Authorization: {{token}}
 
 ### Update Company
-PUT http://localhost:3000/company/64dca8601ef93395a0b2ed3e
+PUT {{url}}company/64dca8601ef93395a0b2ed3e
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+Authorization: {{token}}
 
 {
     "name": "WebOsmotic",
@@ -85,15 +89,57 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQ
 }
 
 ### Delete Company by ID
-DELETE http://localhost:3000/company/64dca8601ef93395a0b2ed3e
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+DELETE {{url}}company/64dca8601ef93395a0b2ed3e
+Authorization: {{token}}
 
 
 ### Update Status by ID
-PATCH http://localhost:3000/company/64dc9f6c21946a4089b9745b
+PATCH {{url}}company/64dc9f6c21946a4089b9745b
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc5NjQ5LCJleHAiOjE2OTIxODMyNDksImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.sEM2BpmGC0trtgc5bljDQ8wKy8yjyViHO5Mx-s20IZ8
+Authorization: {{token}}
 
 {
     "status": "INACTIVE"
+}
+
+
+################################################### Employee Collection #########################################################
+
+### Add Employee
+POST {{url}}api/employee/register
+Content-Type: application/json
+
+{
+    "email": "shailesh.webosmotic@gmail.com",
+    "password": "abc",
+    "firstName": "Shailesh",
+    "lastName": "Umaraliya",
+    "designation": "DEVELOPER"
+}
+
+### Get Emmployee List
+GET {{url}}api/employee
+Content-Type: application/json
+
+### Update employeee
+PUT {{url}}api/employee/64dda84b7d9db49c3d71ef9c
+Content-Type: application/json
+
+{
+    "email": "shailesh.webosmotic@gmail.com",
+    "firstName": "Shailesh",
+    "lastName": "Umaraliya",
+    "designation": "TEAM_LEADER"
+}
+
+### Delete Emmployee
+DELETE {{url}}api/employee/64dda9a92ac05e4a9020955b
+Content-Type: application/json
+
+### Set CompanyId
+PATCH  {{url}}api/employee/64dda711f6d4ceeaa295c63b
+Content-Type: application/json
+
+{
+    "companyId": "64dc9f6c21946a4089b9745b"
 }

@@ -10,6 +10,7 @@ require('dotenv').config();
 import logger from './src/log/logger';
 import authRoute from './src/components/auth/auth.router';
 import companyRoute from './src/components/company/company.route';
+import employeeRoute from './src/components/employee/employee.route';
 
 import initMongo from './src/helper/mongoDB';
 
@@ -38,6 +39,7 @@ app.get(
 // Routes
 app.use('/auth', authRoute);
 app.use('/company', companyRoute);
+app.use('/api/employee', employeeRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

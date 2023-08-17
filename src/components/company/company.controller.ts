@@ -17,7 +17,7 @@ export const addCompanyController = async (
     text: `Your company, ${savedCompany.name}, has been registered with ${savedCompany.email}`,
   };
 
-  sendMail('harshsabhaya99@gmail.com', option);
+  sendMail(process.env.CLIENT_EMAIL, option);
 
   res.send(savedCompany);
 };
@@ -34,6 +34,27 @@ export const getCompanyController = async (
 
     res.send(company);
     return;
+  } else if (req.query) {
+    const { status, name, email } = req.query;
+    const query = {};
+
+    // TODO: Here I need to implement status separately
+    query['status'] = status || '';
+    query['name'] = name || '';
+    query['email'] = email || '';
+    console.log({ status });
+
+    const companies = await Company.find({
+      $and: Object.entries(query).map(([key, value]) => {
+        return {
+          [key]: {
+            $regex: value,
+          },
+        };
+      }),
+    });
+
+    return res.send(companies);
   }
   const list = await Company.find({}, { __v: 0 });
   res.send(list);
