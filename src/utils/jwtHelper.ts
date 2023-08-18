@@ -137,7 +137,7 @@ export const verifyAccountVerificationToken = (token: string) => {
       verificationTokenSecret,
       async (error: any, payload: any) => {
         if (error)
-          return reject(createError.Unauthorized('Verification failed'));
+          return reject(createError.Unauthorized('Invalid verification token'));
 
         return resolve(payload);
       }

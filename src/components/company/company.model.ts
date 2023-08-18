@@ -46,6 +46,7 @@ const companySchema = new Schema({
     type: String,
     enum: ['ACTIVE', 'INACTIVE'],
     require: true,
+    default: 'INACTIVE',
   },
 });
 

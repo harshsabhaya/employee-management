@@ -59,7 +59,29 @@ export const employeeLoginController = async (req: Request, res: Response) => {
   const isMatch = await user.isValidPassword(password);
   if (!isMatch) throw createError.Unauthorized('Email/Password does not valid');
 
-  if (!user.isVerified) throw createError.Unauthorized('Email is not verified');
+  if (!user.isVerified) {
+    const verificationToken = await getVerificationToken(user);
+    const verificationLink = `${process.env.API_HOST}api/employee/account-verify/${verificationToken}`;
+
+    const emailPayload = {
+      email,
+      firstName: user.firstName,
+      url: verificationLink,
+    };
+
+    const template = getTemplate('register.html', emailPayload);
+
+    const option = {
+      subject: 'Verify your account',
+      html: template,
+    };
+
+    sendMail([process.env.CLIENT_EMAIL], option);
+
+    throw createError.Unauthorized(
+      'Email is not verified, verification mail has been sent you.'
+    );
+  }
 
   const accessToken = await signAccessToken(user);
   const refreshToken = await signRefreshToken(user);
@@ -123,6 +145,9 @@ export const accountVerifyController = async (
 
 export const getEmployeeController = async (req: Request, res: Response) => {
   const employeeId = req.params.employeeId;
+  const { search = '', designation }: any = req.query;
+
+  console.log({ query: req.query });
   if (employeeId) {
     const employee = await Employee.findById(req.params.employeeId, {
       __v: 0,
@@ -132,6 +157,13 @@ export const getEmployeeController = async (req: Request, res: Response) => {
     if (!employee) throw createError.NotFound();
 
     return res.send(employee);
+  } else if (search || designation) {
+    const query = {};
+    if (search) query['$text'] = { $search: search };
+    if (designation) query['designation'] = designation;
+
+    const results = await Employee.find(query);
+    return res.send(results);
   }
 
   const employeeList = await Employee.find(

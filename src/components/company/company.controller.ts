@@ -38,21 +38,22 @@ export const getCompanyController = async (
     const { status, name, email } = req.query;
     const query = {};
 
-    // TODO: Here I need to implement status separately
-    query['status'] = status || '';
     query['name'] = name || '';
     query['email'] = email || '';
-    console.log({ status });
 
-    const companies = await Company.find({
+    const filterQuery = {
       $and: Object.entries(query).map(([key, value]) => {
         return {
           [key]: {
-            $regex: value,
+            $regex: new RegExp(`.*${value}.*`, 'i'),
           },
         };
       }),
-    });
+    };
+
+    if (status) filterQuery['status'] = status;
+
+    const companies = await Company.find(filterQuery, { __v: 0 });
 
     return res.send(companies);
   }

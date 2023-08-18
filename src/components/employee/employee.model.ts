@@ -36,6 +36,13 @@ const employeeSchema = new Schema({
   },
 });
 
+employeeSchema.index({
+  firstName: 'text',
+  lastName: 'text',
+  email: 'text',
+  designation: 'text',
+});
+
 employeeSchema.pre('save', async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
