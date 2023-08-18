@@ -1,9 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import Employee from './employee.model';
-import { signAccessToken, signRefreshToken } from '../../utils/jwtHelper';
 import createError from 'http-errors';
+
+import {
+  getVerificationToken,
+  signAccessToken,
+  signRefreshToken,
+  verifyAccountVerificationToken,
+  verifyRefreshToken,
+} from '../../utils/jwtHelper';
 import sendMail from '../../utils/nodemailer';
-import getTemplate from '../../helper/templateHanlder';
+import getTemplate from '../../helper/templateHandler';
+import client from '../../helper/redis';
 
 export const registerEmployeeController = async (
   req: Request,
@@ -16,9 +24,13 @@ export const registerEmployeeController = async (
   const refreshToken = await signRefreshToken(savedEmployee);
   const { firstName, lastName, email, id } = savedEmployee;
 
+  const verificationToken = await getVerificationToken(savedEmployee);
+  const verificationLink = `${process.env.API_HOST}api/employee/account-verify/${verificationToken}`;
+
   const emailPayload = {
     email,
     firstName: savedEmployee.firstName,
+    url: verificationLink,
   };
   const template = getTemplate('register.html', emailPayload);
 
@@ -47,6 +59,8 @@ export const employeeLoginController = async (req: Request, res: Response) => {
   const isMatch = await user.isValidPassword(password);
   if (!isMatch) throw createError.Unauthorized('Email/Password does not valid');
 
+  if (!user.isVerified) throw createError.Unauthorized('Email is not verified');
+
   const accessToken = await signAccessToken(user);
   const refreshToken = await signRefreshToken(user);
   const { firstName, lastName, id } = user;
@@ -59,6 +73,52 @@ export const employeeLoginController = async (req: Request, res: Response) => {
     accessToken,
     refreshToken,
   });
+};
+
+export const refreshTokenController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = await verifyRefreshToken(req.body.refreshToken);
+  const accessToken = await signAccessToken(user);
+  const refreshToken = await signRefreshToken(user);
+  res.send({ accessToken, refreshToken });
+};
+
+export const logoutEmployeeController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user: any = await verifyRefreshToken(req.body.refreshToken);
+  await client.del(user.id);
+
+  res.send(user);
+};
+
+export const accountVerifyController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const tokenPayload: any = await verifyAccountVerificationToken(
+    req.params.verificationToken
+  );
+
+  const user = await Employee.findById(tokenPayload.id);
+
+  if (!user) throw createError.NotFound('User is not registered');
+
+  if (user.isVerified) return res.send('User is already verified');
+
+  const updatedUser = await Employee.findByIdAndUpdate(tokenPayload.id, {
+    isVerified: true,
+  });
+
+  if (!updatedUser) throw createError.InternalServerError();
+
+  res.send('Employee verified successfully');
 };
 
 export const getEmployeeController = async (req: Request, res: Response) => {

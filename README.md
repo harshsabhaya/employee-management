@@ -21,10 +21,12 @@ Redis-commander
 
 ```
 PORT=<port>
+API_HOST=<api_host>
 DB_HOST=<mongo db url>
 DB_NAME=<DB name>
 ACCESS_TOKEN_SECRET=<accessTokenSecret>
 REFRESH_TOKEN_SECRET=<refreshTokenSecret>
+VERIFICATION_TOKEN_SECRET=<verificationTokenSecret>
 // this client credential are related to Google cloud platform
 // reference: https://console.cloud.google.com/getting-started
 // reference: https://www.youtube.com/watch?v=-rcRf7yswfM&ab_channel=MafiaCodes

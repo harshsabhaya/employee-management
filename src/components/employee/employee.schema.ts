@@ -19,7 +19,6 @@ export const updateEmployeeSchema = Joi.object().keys({
     .valid('MANAGER', 'TEAM_LEADER', 'DEVELOPER')
     .required(),
   companyId: Joi.string().allow(''),
-  isVerified: Joi.boolean(),
 });
 
 export const companyIdSchema = Joi.object().keys({
@@ -29,4 +28,8 @@ export const companyIdSchema = Joi.object().keys({
 export const empLoginSchema = Joi.object().keys({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
+});
+
+export const refreshTokenSchema = Joi.object().keys({
+  refreshToken: Joi.string().required(),
 });

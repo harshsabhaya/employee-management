@@ -4,6 +4,7 @@ import {
   companyIdSchema,
   empLoginSchema,
   employeeSchema,
+  refreshTokenSchema,
   updateEmployeeSchema,
 } from './employee.schema';
 import { asyncErrorHandler } from '../../utils/error';
@@ -13,8 +14,11 @@ import {
   getEmployeeController,
   registerEmployeeController,
   employeeLoginController,
+  refreshTokenController,
   updateEmployeeController,
   setCompanyIdController,
+  logoutEmployeeController,
+  accountVerifyController,
 } from './employee.controller';
 
 const router = express.Router();
@@ -31,6 +35,27 @@ router.post(
   '/login',
   validate(empLoginSchema),
   asyncErrorHandler(employeeLoginController)
+);
+
+// Refresh Token
+router.post(
+  '/refresh-token',
+  validate(refreshTokenSchema),
+  asyncErrorHandler(refreshTokenController)
+);
+
+// logout employee
+router.delete(
+  '/logout',
+  verifyAccessToken,
+  validate(refreshTokenSchema),
+  asyncErrorHandler(logoutEmployeeController)
+);
+
+// Account Verification
+router.get(
+  '/account-verify/:verificationToken',
+  asyncErrorHandler(accountVerifyController)
 );
 
 // get all employee list
