@@ -30,13 +30,15 @@ export const getCompanyController = async (
 ) => {
   const companyId = req.params.companyId;
   if (companyId) {
+    // Get company with companyId
     const company = await Company.findById(companyId, { __v: 0 });
     if (!company) throw createError.NotFound('Company does not found');
 
     res.send(company);
     return;
   } else if (req.query) {
-    const { status, name, email } = req.query;
+    // Search with query params
+    const { status, name, email, address } = req.query;
     const query = {};
 
     query['name'] = name || '';
@@ -52,7 +54,25 @@ export const getCompanyController = async (
       }),
     };
 
+    const addressField = [
+      'address.line1',
+      'address.line2',
+      'address.city',
+      'address.state',
+      'address.country',
+      // 'address.zipCode', // ! ZipCode is number type. Hence it will not search as a regex
+    ];
     if (status) filterQuery['status'] = status;
+
+    if (address) {
+      filterQuery['$or'] = addressField.map((key) => {
+        return {
+          [key]: {
+            $regex: new RegExp(`.*${address}.*`, 'i'),
+          },
+        };
+      });
+    }
 
     const companies = await Company.find(filterQuery, { __v: 0 });
 
