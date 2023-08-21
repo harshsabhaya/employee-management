@@ -15,13 +15,12 @@ import client from '../../helper/redis';
 
 export const registerEmployeeController = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   const employee = new Employee(req.body);
   const savedEmployee = await employee.save();
 
-  const accessToken = await signAccessToken(savedEmployee);
-  const refreshToken = await signRefreshToken(savedEmployee);
   const { firstName, lastName, email, id } = savedEmployee;
 
   const verificationToken = await getVerificationToken(savedEmployee);
@@ -39,19 +38,23 @@ export const registerEmployeeController = async (
     html: template,
   };
 
-  sendMail([process.env.CLIENT_EMAIL], option);
+  const response = await sendMail([process.env.CLIENT_EMAIL], option);
+
+  if (response.error) throw createError.InternalServerError();
 
   res.send({
     firstName,
     lastName,
     email,
     id,
-    accessToken,
-    refreshToken,
   });
 };
 
-export const employeeLoginController = async (req: Request, res: Response) => {
+export const employeeLoginController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { email, password } = req.body;
   const user: any = await Employee.findOne({ email: email });
   if (!user) throw createError.NotFound('User does not found');
@@ -76,8 +79,12 @@ export const employeeLoginController = async (req: Request, res: Response) => {
       html: template,
     };
 
-    sendMail([process.env.CLIENT_EMAIL], option);
+    const response = await sendMail([process.env.CLIENT_EMAIL], option);
 
+    // If mail does not send successfully
+    if (response.error) throw createError.InternalServerError();
+
+    // If mail sent successfully
     throw createError.Unauthorized(
       'Email is not verified, verification mail has been sent you.'
     );
@@ -162,7 +169,7 @@ export const getEmployeeController = async (req: Request, res: Response) => {
     if (search) query['$text'] = { $search: search };
     if (designation) query['designation'] = designation;
 
-    const results = await Employee.find(query);
+    const results = await Employee.find(query, { __v: 0, password: 0 });
     return res.send(results);
   }
 

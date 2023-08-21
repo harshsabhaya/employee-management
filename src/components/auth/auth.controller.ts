@@ -15,11 +15,6 @@ export const registerUserController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, password } = req.body;
-  const isAlreadyExist = await User.findOne({ email: email });
-
-  if (isAlreadyExist) throw createError.BadRequest('User already exist');
-
   const user = new User(req.body);
   const savedUser = await user.save();
   const accessToken = await signAccessToken(savedUser);
@@ -54,7 +49,9 @@ export const loginController = async (
     html: `<h1>Thank you for login with ${mail}</h1>`,
   };
 
-  sendMail(mail, option);
+  const response = await sendMail(mail, option);
+
+  if (response.error) throw createError.InternalServerError();
 
   res.send({ id: user.id, email: user.email, accessToken, refreshToken });
 };

@@ -1,7 +1,12 @@
-@token = bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYTcxMWY2ZDRjZWVhYTI5NWM2M2IiLCJpYXQiOjE2OTIyNTQ0MjAsImV4cCI6MTY5MjI1ODAyMCwiYXVkIjoiNjRkZGE3MTFmNmQ0Y2VlYWEyOTVjNjNiIiwiaXNzIjoiYWJjLmNvbSJ9.rQfPJ1KlPF_fF4Z3oshdrAFrgA3UTU4J2yJHXz3ecwo
-@url = http://localhost:3000/
+@token = bearer TOKEN
 
-####
+@refreshToken = TOKEN
+
+@url = http://localhost:3000/api/
+
+################################################### Normal Auth Collection #########################################################
+
+###
 GET {{url}}
 Content-Type: application/json
 Authorization: {{token}}
@@ -29,7 +34,7 @@ POST {{url}}auth/refresh-token
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BnbWFpbC5jb20iLCJpZCI6IjY0ZDllOTEzYjc3M2FkMzczMjc4NDRjMiIsImlhdCI6MTY5MjAxNTc2NSwiZXhwIjoxNzIzNTczMzY1LCJhdWQiOiI2NGQ5ZTkxM2I3NzNhZDM3MzI3ODQ0YzIiLCJpc3MiOiJhYmMuY29tIn0.kN3nnHouZrXvbiywZbJH1-wFU-n_IS7D2x9OfbzEmOU"
+    "refreshToken" : "{{refreshToken}}"
 }
 
 ### Logout
@@ -37,8 +42,10 @@ DELETE {{url}}auth/logout
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc2NjcyLCJleHAiOjE3MjM3MzQyNzIsImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.I7WcXUpCKw2FW5jP4duEPoEWJWkqfoj0ROVwOgJKWKM"
+    "refreshToken" : "{{refreshToken}}"
 }
+
+################################################### Company Collection #########################################################
 
 ### Add Company
 POST {{url}}company
@@ -106,7 +113,7 @@ Authorization: {{token}}
 ################################################### Employee Collection #########################################################
 
 ### Add Employee
-POST {{url}}api/employee/register
+POST {{url}}employee/register
 Content-Type: application/json
 
 {
@@ -118,12 +125,51 @@ Content-Type: application/json
 }
 
 ### Get Emmployee List
-GET {{url}}api/employee
+GET {{url}}employee
 Content-Type: application/json
 
-### Update employeee
-PUT {{url}}api/employee/64dda84b7d9db49c3d71ef9c
+### Account Verify
+GET {{url}}employee/account-verify/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYWlsZXNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYjdkZWY1OTk4ZDBkODRkMmViNTciLCJpYXQiOjE2OTIzMzM5ODAsImV4cCI6MTY5MjMzNzU4MH0.DkCqltG_wvBGDho9SNlRzGoV90uEVhQ2MSk83Ka2HtM
+
+### Login Employee
+POST {{url}}employee/login
 Content-Type: application/json
+
+{
+    "email": "abc.webosmotic@gmail.com",
+    "password": "abc"
+}
+
+### Refresh token
+POST {{url}}employee/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "{{refreshToken}}"
+}
+
+### Logout 
+DELETE {{url}}employee/logout
+Content-Type: application/json
+
+{
+    "refreshToken": "{{refreshToken}}"
+}
+
+### Get Employee 
+GET {{url}}employee?search=ABC&designation=DEVELOPER
+Content-Type: application/json
+Authorization: {{token}}
+
+### Get Employee by ID
+GET {{url}}employee/64ddb813f5998d0d84d2eb5b
+Content-Type: application/json
+Authorization: {{token}}
+
+### Update employeee
+PUT {{url}}employee/64ddb813f5998d0d84d2eb5b
+Content-Type: application/json
+Authorization: {{token}}
 
 {
     "email": "shailesh.webosmotic@gmail.com",
@@ -133,11 +179,11 @@ Content-Type: application/json
 }
 
 ### Delete Emmployee
-DELETE {{url}}api/employee/64dda9a92ac05e4a9020955b
+DELETE {{url}}employee/64dda9a92ac05e4a9020955b
 Content-Type: application/json
 
 ### Set CompanyId
-PATCH  {{url}}api/employee/64dda711f6d4ceeaa295c63b
+PATCH  {{url}}employee/64dda711f6d4ceeaa295c63b
 Content-Type: application/json
 
 {

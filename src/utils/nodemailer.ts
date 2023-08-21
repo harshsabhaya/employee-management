@@ -50,7 +50,7 @@ const sendMail = async (email: string | string[], option: emailOption) => {
 
     return result;
   } catch (error) {
-    console.log('Send Mail Error :::::::', { error });
+    return { error };
   }
 };
 

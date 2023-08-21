@@ -17,7 +17,8 @@ export const addCompanyController = async (
     text: `Your company, ${savedCompany.name}, has been registered with ${savedCompany.email}`,
   };
 
-  sendMail(process.env.CLIENT_EMAIL, option);
+  const response = await sendMail(process.env.CLIENT_EMAIL, option);
+  if (response.error) throw createError.InternalServerError();
 
   res.send(savedCompany);
 };

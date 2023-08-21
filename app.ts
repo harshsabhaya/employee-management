@@ -18,6 +18,9 @@ import { verifyAccessToken } from './src/utils/jwtHelper';
 
 initMongo();
 
+// Add body in Winston error object
+expressWinston.requestWhitelist.push('body');
+
 const app = express();
 app.use(express.json());
 
@@ -37,8 +40,8 @@ app.get(
 );
 
 // Routes
-app.use('/auth', authRoute);
-app.use('/company', companyRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/company', companyRoute);
 app.use('/api/employee', employeeRoute);
 
 const PORT = process.env.PORT || 3000;
