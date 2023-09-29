@@ -34,6 +34,9 @@ const employeeSchema = new Schema({
     default: false,
     require: true,
   },
+  profile: {
+    type: String,
+  },
 });
 
 employeeSchema.index({

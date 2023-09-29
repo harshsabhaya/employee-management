@@ -1,4 +1,6 @@
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
 import validate from '../../middleware/validation';
 import {
   companyIdSchema,
@@ -20,6 +22,15 @@ import {
   logoutEmployeeController,
   accountVerifyController,
 } from './employee.controller';
+
+const storage = multer.diskStorage({
+  destination: path.resolve(__dirname, 'profile'),
+  filename: function (req: any, file: any, cb: any) {
+    cb(null, Date.now() + '_' + file.originalname);
+  },
+});
+
+const upload: any = multer({ storage });
 
 const router = express.Router();
 
@@ -72,6 +83,7 @@ router.get(
 router.put(
   '/:employeeId',
   verifyAccessToken,
+  upload.single('profile'),
   validate(updateEmployeeSchema),
   asyncErrorHandler(updateEmployeeController)
 );

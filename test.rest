@@ -1,6 +1,6 @@
-@token = bearer TOKEN
+@token = bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYWlsZXNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYjgxM2Y1OTk4ZDBkODRkMmViNWIiLCJpYXQiOjE2OTI2ODY2MjUsImV4cCI6MTY5MjY5MDIyNSwiYXVkIjoiNjRkZGI4MTNmNTk5OGQwZDg0ZDJlYjViIiwiaXNzIjoiYWJjLmNvbSJ9.pr7gzBAwB_B4QnNXhcfcSPlu28I60WLvKWcGbr7JPok
 
-@refreshToken = TOKEN
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYWlsZXNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYjgxM2Y1OTk4ZDBkODRkMmViNWIiLCJpYXQiOjE2OTI2ODY2MjUsImV4cCI6MTcyNDI0NDIyNSwiYXVkIjoiNjRkZGI4MTNmNTk5OGQwZDg0ZDJlYjViIiwiaXNzIjoiYWJjLmNvbSJ9.ohsUlNt2g2q347pDRcBHkvTO6jOLpKQCl3zfrVUE_Ls
 
 @url = http://localhost:3000/api/
 
@@ -136,7 +136,7 @@ POST {{url}}employee/login
 Content-Type: application/json
 
 {
-    "email": "abc.webosmotic@gmail.com",
+    "email": "shailesh.webosmotic@gmail.com",
     "password": "abc"
 }
 
@@ -172,7 +172,6 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-    "email": "shailesh.webosmotic@gmail.com",
     "firstName": "Shailesh",
     "lastName": "Umaraliya",
     "designation": "TEAM_LEADER"

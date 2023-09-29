@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "8b746497-f620-4d03-9e2a-af7d25ec555f",
+		"name": "employee-management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26823739"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"harsh@gmail.com\",\r\n    \"password\": \"abc@12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTcxMDc3LCJleHAiOjE3MjM3Mjg2NzcsImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.q9x1H0vLvz7mWDVMd_dYlJsmuP5tPCM2PPvdzs10Dv8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}auth/refresh-token"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"harsh@gmail.com\",\r\n    \"password\": \"abc@12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoQGdtYWlsLmNvbSIsImlkIjoiNjRkYzc1ZjJhNjViYTIzYTZmZDgxNzY2IiwiaWF0IjoxNjkyMTc2MDgyLCJleHAiOjE3MjM3MzM2ODIsImF1ZCI6IjY0ZGM3NWYyYTY1YmEyM2E2ZmQ4MTc2NiIsImlzcyI6ImFiYy5jb20ifQ.2zfo9qa0gvZIGyrJ08Ea2vJMfXY_mdCSWYki2frhUNo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}auth/logout"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "addCompany",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Robotics infotech Pvt Ltd\",\r\n    \"email\": \"vishal.webosmotic@gmail.com\",\r\n    \"address\": {\r\n        \"line1\": \"A-6, someshwar nagar society\",\r\n        \"line2\": \"opp. Joggers Park Road\",\r\n        \"city\": \"Surat\",\r\n        \"state\": \"Gujarat\",\r\n        \"country\": \"India\",\r\n        \"zipCode\": \"395007\"\r\n    },\r\n    \"contact\": \"8460618624\",\r\n    \"status\": \"INACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}company/"
+					},
+					"response": []
+				},
+				{
+					"name": "getCompany",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}company?name=&email=&address=India",
+							"host": [
+								"{{url}}company"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ACTIVE",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "email",
+									"value": ""
+								},
+								{
+									"key": "address",
+									"value": "India"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCompanyById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}company/64dcb14657e4593b82afa2fb"
+					},
+					"response": []
+				},
+				{
+					"name": "updateCompany",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"PQR Pvt Ltd \",\r\n    \"email\": \"shailesh.webosmotic@gmail.com\",\r\n    \"address\": {\r\n        \"line1\": \"A-6, someshwar nagar society\",\r\n        \"line2\": \"opp. Joggers Park Road\",\r\n        \"city\": \"Surat\",\r\n        \"state\": \"Gujarat\",\r\n        \"country\": \"India\",\r\n        \"zipCode\": \"395007\"\r\n    },\r\n    \"contact\": \"8460618624\",\r\n    \"status\": \"INACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}company/64dc9f6c21946a4089b9745b"
+					},
+					"response": []
+				},
+				{
+					"name": "updateCompanyStatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}company/64dcb14657e4593b82afa2fb"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCompany",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{url}}company/64dc9f7c21946a4089b9745d"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"aveshhh.webosmotic@gmail.com\",\r\n    \"password\": \"abc\",\r\n    \"firstName\": \"Harsh\",\r\n    \"lastName\": \"Umaraliya\",\r\n    \"designation\": \"DEVELOPER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}employee/register"
+					},
+					"response": []
+				},
+				{
+					"name": "accountVerify",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}employee/account-verify/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYWlsZXNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYjdkZWY1OTk4ZDBkODRkMmViNTciLCJpYXQiOjE2OTIzMzM5ODAsImV4cCI6MTY5MjMzNzU4MH0.DkCqltG_wvBGDho9SNlRzGoV90uEVhQ2MSk83Ka2HtM"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"var accessToken = jsonData.accessToken\r",
+									"pm.collectionVariables.set(\"token\", accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sheil.webosmotic@gmail.com\",\r\n    \"password\": \"abc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}employee/login"
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYTcxMWY2ZDRjZWVhYTI5NWM2M2IiLCJpYXQiOjE2OTIyNjA2NTYsImV4cCI6MTcyMzgxODI1NiwiYXVkIjoiNjRkZGE3MTFmNmQ0Y2VlYWEyOTVjNjNiIiwiaXNzIjoiYWJjLmNvbSJ9.5qkKEDERKSGgbLL3mf2RQaqtWynJn4WsgInF1bpGjXc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}employee/refresh-token"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYWlsZXNoLndlYm9zbW90aWNAZ21haWwuY29tIiwiaWQiOiI2NGRkYjdkZWY1OTk4ZDBkODRkMmViNTciLCJpYXQiOjE2OTIyNjA5MzMsImV4cCI6MTcyMzgxODUzMywiYXVkIjoiNjRkZGI3ZGVmNTk5OGQwZDg0ZDJlYjU3IiwiaXNzIjoiYWJjLmNvbSJ9.gZwwHa0ioahA5a7-ADcUS-Lu_OhEjRj6mTSOG_Juzdg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}employee/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}employee?search=&designation=DEVELOPER",
+							"host": [
+								"{{url}}employee"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								},
+								{
+									"key": "designation",
+									"value": "DEVELOPER"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployeeById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}employee/64dda711f6d4ceeaa295c63b"
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmployeeById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shailesh\",\r\n    \"lastName\": \"Umaraliya\",\r\n    \"designation\": \"DEVELOPER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}employee/64ddd1fc864147ad37f4bbcb"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEmployeeById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{url}}employee/64ddb7bbf5998d0d84d2eb55"
+					},
+					"response": []
+				},
+				{
+					"name": "setCompanyId",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"companyId\": \"64dc9f6c21946a4089b9745b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}employee/64dda711f6d4ceeaa295c63b"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

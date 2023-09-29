@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import Employee from './employee.model';
 import createError from 'http-errors';
+import util from 'util';
+import { pipeline } from 'stream';
+import fs from 'fs';
+import path from 'path';
+
+const pump = util.promisify(pipeline);
 
 import {
   getVerificationToken,
@@ -12,6 +18,7 @@ import {
 import sendMail from '../../utils/nodemailer';
 import getTemplate from '../../helper/templateHandler';
 import client from '../../helper/redis';
+import { EMPLOYEE } from '../../models/employee';
 
 export const registerEmployeeController = async (
   req: Request,
@@ -180,16 +187,33 @@ export const getEmployeeController = async (req: Request, res: Response) => {
   res.send(employeeList);
 };
 
-export const updateEmployeeController = async (req: Request, res: Response) => {
+export const updateEmployeeController = async (
+  req: EMPLOYEE.MulterRequest,
+  res: Response
+) => {
+  console.log('reqreq', req.body, req.file);
+  const payload = req.body;
+  if (req.file?.filename) payload['profile'] = req.file.filename;
+
   const updatedEmp = await Employee.findByIdAndUpdate(
     req.params.employeeId,
-    req.body,
+    payload,
     { new: true, projection: { __v: 0, password: 0 } }
   );
+
   if (!updatedEmp)
     throw createError.BadRequest(
       'The Employee you are trying to update is not available '
     );
+  // if (req.file) {
+  //   const { originalname, filename } = req.file;
+  //   const filePath = path.resolve(
+  //     __dirname,
+  //     `profile/${filename + '_' + originalname}`
+  //   );
+
+  //   await pump(req.file, fs.createWriteStream(filePath));
+  // }
   res.send(updatedEmp);
 };
 

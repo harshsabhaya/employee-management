@@ -9,16 +9,18 @@ export const employeeSchema = Joi.object().keys({
     .valid('MANAGER', 'TEAM_LEADER', 'DEVELOPER')
     .required(),
   companyId: Joi.string().allow(''),
+  profile: Joi.string().allow(''),
 });
 
 export const updateEmployeeSchema = Joi.object().keys({
-  email: Joi.string().email().required(),
+  // email: Joi.string().email().required(),
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   designation: Joi.string()
     .valid('MANAGER', 'TEAM_LEADER', 'DEVELOPER')
     .required(),
   companyId: Joi.string().allow(''),
+  profile: Joi.string().allow(''),
 });
 
 export const companyIdSchema = Joi.object().keys({

@@ -1,3 +1,8 @@
+# To Run the project
+
+npm start
+redis-server # in Windows subsystem for Linux
+
 # Installation Required
 
 ```
